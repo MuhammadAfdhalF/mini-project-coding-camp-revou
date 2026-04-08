@@ -1,0 +1,453 @@
+/* =============================================
+   CSS CUSTOM PROPERTIES (Light & Dark themes)
+   ============================================= */
+:root {
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-bg: #ffffff;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --text-on-gradient: #ffffff;
+  --input-bg: #f7fafc;
+  --input-border: #e2e8f0;
+  --input-focus: #667eea;
+  --btn-primary-bg: #667eea;
+  --btn-primary-hover: #5a67d8;
+  --btn-secondary-bg: #e2e8f0;
+  --btn-secondary-hover: #cbd5e0;
+  --btn-secondary-text: #4a5568;
+  --task-done-color: #a0aec0;
+  --task-border: #e2e8f0;
+  --warning-color: #e53e3e;
+  --link-btn-bg: #ebf4ff;
+  --link-btn-text: #3182ce;
+  --link-btn-hover: #bee3f8;
+  --timer-color: #2d3748;
+}
+
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  --card-bg: #2d3748;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --text-primary: #f7fafc;
+  --text-secondary: #a0aec0;
+  --text-on-gradient: #f7fafc;
+  --input-bg: #1a202c;
+  --input-border: #4a5568;
+  --input-focus: #90cdf4;
+  --btn-primary-bg: #5a67d8;
+  --btn-primary-hover: #667eea;
+  --btn-secondary-bg: #4a5568;
+  --btn-secondary-hover: #718096;
+  --btn-secondary-text: #e2e8f0;
+  --task-done-color: #718096;
+  --task-border: #4a5568;
+  --warning-color: #fc8181;
+  --link-btn-bg: #2c5282;
+  --link-btn-text: #90cdf4;
+  --link-btn-hover: #2a4365;
+  --timer-color: #f7fafc;
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  padding: 24px 16px;
+  transition: background 0.3s ease;
+}
+
+/* =============================================
+   THEME TOGGLE BUTTON
+   ============================================= */
+#theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* =============================================
+   DASHBOARD GRID LAYOUT
+   ============================================= */
+.dashboard {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Middle row: timer left, todo right */
+.middle-row {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 20px;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: var(--card-shadow);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* =============================================
+   TOP CARD — Greeting / Clock / Date
+   ============================================= */
+.card-top {
+  text-align: center;
+  padding: 36px 28px;
+}
+
+.greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--btn-primary-bg);
+  margin-bottom: 8px;
+  transition: color 0.3s;
+}
+
+.clock {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.name-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.name-row input {
+  width: 220px;
+}
+
+/* =============================================
+   FOCUS TIMER CARD
+   ============================================= */
+.card-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.timer-display {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--timer-color);
+  letter-spacing: 3px;
+  margin: 16px 0 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* =============================================
+   TO-DO LIST CARD
+   ============================================= */
+.todo-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.todo-input-row input {
+  flex: 1;
+}
+
+.warning {
+  font-size: 0.8rem;
+  color: var(--warning-color);
+  margin-bottom: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scrollbar styling */
+.task-list::-webkit-scrollbar {
+  width: 4px;
+}
+.task-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.task-list::-webkit-scrollbar-thumb {
+  background: var(--input-border);
+  border-radius: 4px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--task-border);
+  border-radius: 10px;
+  background: var(--input-bg);
+  transition: background 0.2s;
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+  color: var(--task-done-color);
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--btn-primary-bg);
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.task-edit-input {
+  flex: 1;
+  font-size: 0.95rem;
+  border: 1px solid var(--input-focus);
+  border-radius: 6px;
+  padding: 2px 6px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.task-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--btn-secondary-bg);
+  color: var(--text-primary);
+}
+
+/* =============================================
+   QUICK LINKS CARD
+   ============================================= */
+.links-input-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.links-input-row input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.link-btn {
+  background: var(--link-btn-bg);
+  color: var(--link-btn-text);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.link-btn:hover {
+  background: var(--link-btn-hover);
+  transform: translateY(-1px);
+}
+
+.link-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.link-delete-btn:hover {
+  color: var(--warning-color);
+}
+
+/* =============================================
+   SHARED INPUT & BUTTON STYLES
+   ============================================= */
+input[type="text"],
+input[type="url"] {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s, background 0.3s;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus {
+  border-color: var(--input-focus);
+}
+
+input::placeholder {
+  color: var(--text-secondary);
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background: var(--btn-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-secondary:hover {
+  background: var(--btn-secondary-hover);
+  transform: translateY(-1px);
+}
+
+/* =============================================
+   RESPONSIVE — stack on small screens
+   ============================================= */
+@media (max-width: 640px) {
+  .middle-row {
+    grid-template-columns: 1fr;
+  }
+
+  .clock {
+    font-size: 2.5rem;
+  }
+
+  .timer-display {
+    font-size: 3rem;
+  }
+
+  #theme-toggle {
+    top: 8px;
+    right: 8px;
+    font-size: 0.78rem;
+    padding: 6px 12px;
+  }
+
+  .links-input-row {
+    flex-direction: column;
+  }
+}
