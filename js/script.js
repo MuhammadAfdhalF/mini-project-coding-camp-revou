@@ -137,6 +137,9 @@ function renderTimer() {
 function startTimer() {
   if (timerRunning) return;
   timerRunning = true;
+  // Add glow class while timer is active
+  timerDisplay.classList.add('timer-active');
+  document.getElementById('timer-ring').classList.add('timer-active');
   timerInterval = setInterval(() => {
     if (timerSeconds > 0) {
       timerSeconds--;
@@ -145,6 +148,8 @@ function startTimer() {
       // Timer reached zero — stop and alert
       clearInterval(timerInterval);
       timerRunning = false;
+      timerDisplay.classList.remove('timer-active');
+      document.getElementById('timer-ring').classList.remove('timer-active');
       alert('⏰ Focus session complete! Take a break.');
     }
   }, 1000);
@@ -154,6 +159,9 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timerInterval);
   timerRunning = false;
+  // Remove glow when paused
+  timerDisplay.classList.remove('timer-active');
+  document.getElementById('timer-ring').classList.remove('timer-active');
 }
 
 /** Resets the timer back to 25:00. */
@@ -227,10 +235,10 @@ function renderTasks() {
 
     // Delete button
     const deleteBtn = document.createElement('button');
-    deleteBtn.className   = 'btn-icon';
-    deleteBtn.textContent = '🗑️';
+    deleteBtn.className   = 'btn-icon btn-delete';
+    deleteBtn.textContent = '✕';
     deleteBtn.setAttribute('aria-label', `Delete task: ${task.text}`);
-    deleteBtn.addEventListener('click', () => deleteTask(task.id));
+    deleteBtn.addEventListener('click', () => deleteTask(task.id, li));
 
     actions.appendChild(editBtn);
     actions.appendChild(deleteBtn);
@@ -283,11 +291,21 @@ function toggleTask(id) {
   renderTasks();
 }
 
-/** Deletes a task by its ID. */
-function deleteTask(id) {
-  const tasks = loadTasks().filter((t) => t.id !== id);
-  saveTasks(tasks);
-  renderTasks();
+/** Deletes a task by its ID, with an exit animation. */
+function deleteTask(id, liEl) {
+  // Add the exit animation class, then remove from DOM + storage after it plays
+  if (liEl) {
+    liEl.classList.add('removing');
+    liEl.addEventListener('animationend', () => {
+      const tasks = loadTasks().filter((t) => t.id !== id);
+      saveTasks(tasks);
+      renderTasks();
+    }, { once: true });
+  } else {
+    const tasks = loadTasks().filter((t) => t.id !== id);
+    saveTasks(tasks);
+    renderTasks();
+  }
 }
 
 /**
